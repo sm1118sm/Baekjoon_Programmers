@@ -1,0 +1,94 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define MAX_PLAYERS 300
+#define MAX_NAME_LENGTH 17
+
+// 전역 변수 선언
+int rooms_level[MAX_PLAYERS][MAX_PLAYERS];
+char rooms_name[MAX_PLAYERS][MAX_PLAYERS][MAX_NAME_LENGTH];
+int room_count[MAX_PLAYERS];
+int room_min_level[MAX_PLAYERS];
+int room_max_level[MAX_PLAYERS];
+int total_rooms = 0;
+
+int compare_names(const void* a, const void* b) {
+    return strcmp((const char*)a, (const char*)b);
+}
+
+void add_player_to_room(int level, const char* name, int m) {
+    int found_room = 0;
+
+    for (int i = 0; i < total_rooms; i++) {
+        if (room_count[i] < m && level >= room_min_level[i] && level <= room_max_level[i]) {
+            rooms_level[i][room_count[i]] = level;
+            strcpy_s(rooms_name[i][room_count[i]], MAX_NAME_LENGTH, name);
+            room_count[i]++;
+            found_room = 1;
+            break;
+        }
+    }
+
+    if (!found_room) {
+        rooms_level[total_rooms][0] = level;
+        strcpy_s(rooms_name[total_rooms][0], MAX_NAME_LENGTH, name);
+        room_count[total_rooms] = 1;
+        room_min_level[total_rooms] = level - 10;
+        room_max_level[total_rooms] = level + 10;
+        total_rooms++;
+    }
+}
+
+void sort_and_print_room(int levels[], char names[][MAX_NAME_LENGTH], int player_count) {
+    char temp_names[MAX_PLAYERS][MAX_NAME_LENGTH];
+    for (int i = 0; i < player_count; i++) {
+        strcpy_s(temp_names[i], MAX_NAME_LENGTH, names[i]);
+    }
+
+    qsort(temp_names, player_count, sizeof(temp_names[0]), compare_names);
+
+    for (int i = 0; i < player_count; i++) {
+        for (int j = 0; j < player_count; j++) {
+            if (strcmp(temp_names[i], names[j]) == 0) {
+                printf("%d %s\n", levels[j], names[j]);
+                break;
+            }
+        }
+    }
+}
+
+void print_room_status(int levels[], char names[][MAX_NAME_LENGTH], int player_count, int m) {
+    if (player_count == m) {
+        printf("Started!\n");
+    }
+    else {
+        printf("Waiting!\n");
+    }
+    sort_and_print_room(levels, names, player_count);
+}
+
+int main() {
+    int p, m;
+    if (scanf_s("%d %d", &p, &m) != 2) {
+        printf("Error reading input.\n");
+        return 1;
+    }
+
+    for (int i = 0; i < p; i++) {
+        int level;
+        char name[MAX_NAME_LENGTH];
+        if (scanf_s("%d %16s", &level, name, (unsigned)_countof(name)) != 2) {
+            printf("Error reading player data.\n");
+            return 1;
+        }
+
+        add_player_to_room(level, name, m);
+    }
+
+    for (int i = 0; i < total_rooms; i++) {
+        print_room_status(rooms_level[i], rooms_name[i], room_count[i], m);
+    }
+
+    return 0;
+}
