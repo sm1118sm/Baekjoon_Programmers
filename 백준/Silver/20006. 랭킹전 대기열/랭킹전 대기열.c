@@ -32,11 +32,11 @@ int main() {
 		roomNum = -1;
         
 		for (int j = 0; j < roomCount; j++){
-            if (abs(rooms[j].hostLevel - level[i]) <= 10 && rooms[j].count < m) { 
-                roomNum = j; 
-                break; 
-            }
-        }
+            		if (abs(rooms[j].hostLevel - level[i]) <= 10 && rooms[j].count < m) { 
+                		roomNum = j; 
+                		break; 
+            		}
+       		}
 		//방에 넣어주기
 		if (roomNum == -1) {
 			roomNum = roomCount++;
@@ -45,23 +45,26 @@ int main() {
 			rooms[roomNum].count = 1;
 		}
         
-		else rooms[roomNum].person[rooms[roomNum].count++] = i;
+		else {
+			rooms[roomNum].person[rooms[roomNum].count++] = i;
+		}
 	}
 
 	for (int i = 0; i < roomCount; i++) {
+		
 		if (rooms[i].count == m){
-            printf("Started!\n");
-        }
+           		printf("Started!\n");
+		}
         
 		else {
-            printf("Waiting!\n");
-        } 
+            		printf("Waiting!\n");
+        	} 
         
 		qsort(rooms[i].person, rooms[i].count, sizeof(int), compare);
         
 		for (int j = 0; j < rooms[i].count; j++){
-            printf("%d %s\n", level[rooms[i].person[j]], name[rooms[i].person[j]]);
-        }
+            		printf("%d %s\n", level[rooms[i].person[j]], name[rooms[i].person[j]]);
+        	}
 	}
 	return 0;
 }
