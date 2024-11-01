@@ -1,70 +1,59 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 
-typedef struct {
-	int hostLevel;
-	int count;
-	int person[300];
-}room;
-
-int p, m, roomCount = 0, roomNum, level[300];
-
-room rooms[300];
-
-char name[300][17];
-
-int compare(const void* f, const void* s) {
-    return strcmp(name[*((int*)f)], name[*((int*)s)]); 
-}
-
-int abs(int a) { 
-    return a < 0 ? -a : a; 
-}
+#define MAX_PLAYERS 300
+#define MAX_NAME_LEN 16
 
 int main() {
-	scanf("%d %d", &p, &m);
-    
-	for (int i = 0; i < p; i++) {
-		scanf("%d %s", &level[i], name[i]);
+    int p, m;
+    int level[MAX_PLAYERS], room[MAX_PLAYERS][MAX_PLAYERS];
+    char name[MAX_PLAYERS][MAX_NAME_LEN + 1];
+    int room_count = 0, room_size[MAX_PLAYERS] = {0};
 
-		//방 정해주기
-		roomNum = -1;
-        
-		for (int j = 0; j < roomCount; j++){
-            		if (abs(rooms[j].hostLevel - level[i]) <= 10 && rooms[j].count < m) { 
-                		roomNum = j; 
-                		break; 
-            		}
-       		}
-		//방에 넣어주기
-		if (roomNum == -1) {
-			roomNum = roomCount++;
-			rooms[roomNum].hostLevel = level[i];
-			rooms[roomNum].person[0] = i;
-			rooms[roomNum].count = 1;
-		}
-        
-		else {
-			rooms[roomNum].person[rooms[roomNum].count++] = i;
-		}
-	}
+    // 입력 받기
+    scanf("%d %d", &p, &m);
+    for (int i = 0; i < p; i++) {
+        scanf("%d %s", &level[i], name[i]);
+    }
 
-	for (int i = 0; i < roomCount; i++) {
-		
-		if (rooms[i].count == m){
-           		printf("Started!\n");
-		}
-        
-		else {
-            		printf("Waiting!\n");
-        	} 
-        
-		qsort(rooms[i].person, rooms[i].count, sizeof(int), compare);
-        
-		for (int j = 0; j < rooms[i].count; j++){
-            		printf("%d %s\n", level[rooms[i].person[j]], name[rooms[i].person[j]]);
-        	}
-	}
-	return 0;
+    // 플레이어 입장 처리
+    for (int i = 0; i < p; i++) {
+        int placed = 0;
+        for (int j = 0; j < room_count; j++) {
+            if (room_size[j] < m && level[room[j][0]] - 10 <= level[i] && level[i] <= level[room[j][0]] + 10) {
+                room[j][room_size[j]++] = i;
+                placed = 1;
+                break;
+            }
+        }
+        if (!placed) {
+            room[room_count][0] = i;
+            room_size[room_count++] = 1;
+        }
+    }
+
+    // 출력
+    for (int i = 0; i < room_count; i++) {
+        if (room_size[i] == m) {
+            printf("Started!\n");
+        } else {
+            printf("Waiting!\n");
+        }
+
+        // 닉네임 정렬 (삽입 정렬 사용)
+        for (int j = 1; j < room_size[i]; j++) {
+            for (int k = j; k > 0 && strcmp(name[room[i][k - 1]], name[room[i][k]]) > 0; k--) {
+                int temp = room[i][k];
+                room[i][k] = room[i][k - 1];
+                room[i][k - 1] = temp;
+            }
+        }
+
+        // 플레이어 출력
+        for (int j = 0; j < room_size[i]; j++) {
+            int player_index = room[i][j];
+            printf("%d %s\n", level[player_index], name[player_index]);
+        }
+    }
+    return 0;
 }
