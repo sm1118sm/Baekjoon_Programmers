@@ -2,6 +2,7 @@
 #include <string.h>
 
 int main() {
+    
     int p, m;
     int level[300];
     int room[300][300];
