@@ -1,14 +1,11 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MAX_PLAYERS 300
-#define MAX_NAME_LEN 16
-
 int main() {
     int p, m;
-    int level[MAX_PLAYERS], room[MAX_PLAYERS][MAX_PLAYERS];
-    char name[MAX_PLAYERS][MAX_NAME_LEN + 1];
-    int room_count = 0, room_size[MAX_PLAYERS] = {0};
+    int level[300], room[300][300];
+    char name[300][17];
+    int room_count = 0, room_size[300] = {0};
 
     // 입력 받기
     scanf("%d %d", &p, &m);
