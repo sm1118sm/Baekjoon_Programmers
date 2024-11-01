@@ -7,7 +7,7 @@ int main() {
     int level[300];
     int room[300][300];
     char name[300][17];
-    int room_count = 0
+    int room_count = 0;
     int room_size[300] = {0};
 
     // 입력 받기
