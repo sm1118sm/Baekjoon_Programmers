@@ -31,7 +31,7 @@ int assign_rooms(int p, int m) {
         }
 
         // 입장 가능한 방이 없을 경우 새로운 방을 생성
-        if (!placed && room_count < MAX_PLAYERS) {
+        if (!placed && room_count < 300) {
             room[room_count][0] = i;  // 새 방의 첫 번째 플레이어 인덱스
             room_size[room_count++] = 1;  // 새 방의 플레이어 수 초기화
         }
