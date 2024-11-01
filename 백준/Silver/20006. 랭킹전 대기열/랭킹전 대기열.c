@@ -10,7 +10,7 @@ int main() {
     // 입력 받기
     scanf("%d %d", &p, &m);
     for (int i = 0; i < p; i++) {
-        scanf("%d %s", &level[i], name[i]);
+        scanf("%d %s", &level[i], name[i], 17);
     }
 
     // 플레이어 입장 처리
@@ -23,7 +23,7 @@ int main() {
                 break;
             }
         }
-        if (!placed) {
+        if (!placed && room_count < 300) {
             room[room_count][0] = i;
             room_size[room_count++] = 1;
         }
