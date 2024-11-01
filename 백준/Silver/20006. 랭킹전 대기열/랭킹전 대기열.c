@@ -3,9 +3,11 @@
 
 int main() {
     int p, m;
-    int level[300], room[300][300];
+    int level[300];
+    int room[300][300];
     char name[300][17];
-    int room_count = 0, room_size[300] = {0};
+    int room_count = 0
+    int room_size[300] = {0};
 
     // 입력 받기
     scanf("%d %d", &p, &m);
