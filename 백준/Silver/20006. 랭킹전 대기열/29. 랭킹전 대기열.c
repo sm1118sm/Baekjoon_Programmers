@@ -51,8 +51,7 @@ int main() {
 
         // 플레이어 출력
         for (int j = 0; j < room_size[i]; j++) {
-            int player_index = room[i][j];
-            printf("%d %s\n", level[player_index], name[player_index]);
+            printf("%d %s\n", level[room[i][j]], name[room[i][j]]);
         }
     }
     return 0;
