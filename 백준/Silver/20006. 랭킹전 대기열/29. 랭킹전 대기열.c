@@ -4,8 +4,8 @@
 int main() {
     
     int p, m;
-    int level[300];
     int room[300][300];
+    int level[300];
     char name[300][17];
     int room_count = 0;
     int room_size[300] = {0};
