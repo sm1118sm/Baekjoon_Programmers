@@ -42,10 +42,12 @@ int main() {
 
         // 닉네임 정렬 (삽입 정렬 사용)
         for (int j = 1; j < room_size[i]; j++) {
-            for (int k = j; k > 0 && strcmp(name[room[i][k - 1]], name[room[i][k]]) > 0; k--) {
-                int temp = room[i][k];
-                room[i][k] = room[i][k - 1];
-                room[i][k - 1] = temp;
+            for (int k = j; k > 0; k--) {
+                if (strcmp(name[room[i][k - 1]], name[room[i][k]]) > 0) {
+                    int temp = room[i][k];
+                    room[i][k] = room[i][k - 1];
+                    room[i][k - 1] = temp;
+                }
             }
         }
 
