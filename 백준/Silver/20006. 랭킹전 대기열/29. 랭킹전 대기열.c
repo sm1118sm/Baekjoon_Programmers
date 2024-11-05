@@ -36,7 +36,9 @@ int main() {
     for (int i = 0; i < room_count; i++) {
         if (room_size[i] == m) {
             printf("Started!\n");
-        } else {
+        } 
+        
+        else {
             printf("Waiting!\n");
         }
 
