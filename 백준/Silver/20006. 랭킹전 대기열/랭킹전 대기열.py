@@ -9,7 +9,7 @@ for _ in range(p):
         
     else:    
         for room in rooms:      
-            first_lv = room[0][0]     
+            first_level = room[0][0]     
             if len(room) < m and first_level - 10 <= int(level) <= first_level + 10:
                 room.append([level, name])  
                 break     
