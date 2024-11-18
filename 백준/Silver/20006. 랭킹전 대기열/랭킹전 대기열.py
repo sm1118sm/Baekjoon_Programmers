@@ -3,19 +3,19 @@ p, m = map(int, input().split())
 rooms = []  
 
 for _ in range(p):
-    lv, name = input().split()
+    level, name = input().split()
     if len(rooms) == 0:     
-        rooms.append([[int(lv), name]])    
+        rooms.append([[int(level), name]])    
         
     else:    
         for room in rooms:      
             first_lv = room[0][0]     
-            if len(room) < m and first_lv - 10 <= int(lv) <= first_lv + 10:
-                room.append([lv, name])  
+            if len(room) < m and first_level - 10 <= int(level) <= first_level + 10:
+                room.append([level, name])  
                 break     
                 
         else:     
-            rooms.append([[int(lv), name]])     
+            rooms.append([[int(level), name]])     
     
 for room in rooms:
     if len(room) == m:
