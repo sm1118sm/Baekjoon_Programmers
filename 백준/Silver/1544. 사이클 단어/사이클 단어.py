@@ -1,13 +1,14 @@
 import sys
+input = sys.stdin.readline
 
-N = int(sys.stdin.readline())
+N = int(input())
 
 word_count = dict()
 
 count = 0
 
-for s in range(N):
-    word = sys.stdin.readline().rstrip()
+for k in range(N):
+    word = input().strip()
 
     if word in word_count:
         continue
