@@ -4,38 +4,37 @@ input = sys.stdin.readline
 
 n, m, v = map(int, input().split())
 
-graph = [[False] * (n+1) for _ in range(n+1)]
+graph = [[] for _ in range(n + 1)]
 
-for i in range(m):
-    a, b = map(int, input().split())
-    graph[a][b] = True
-    graph[b][a] = True
+for _ in range(m):
+    v1, v2 = map(int, input().split())
+    graph[v1].append(v2)
+    graph[v2].append(v1)
 
-visted1 = [False] * (n+1)
-visted2 = [False] * (n+1)
+for g in graph:
+    g.sort()
 
-
-def dfs(v):
-    visted1[v] = True
+def dfs(graph, v, visited):
+    visited[v] = True
     print(v, end=" ")
-    for i in range(1, n+1):
-        if not visted1[i] and graph[v][i]:
-            dfs(i)
+    for i in graph[v]:
+        if not visited[i]:
+            dfs(graph, i, visited)
 
+def bfs(graph, v, visited):
+    queue = deque([v])
+    visited[v] = True
+    while queue:
+        node = queue.popleft()
+        print(node, end=" ")
+        for i in graph[node]:
+            if not visited[i]:
+                visited[i] = True
+                queue.append(i)
 
-def bfs(v):
-    que = deque([v])
-    visted2[v] = True
-    while que:
-        v = que.popleft()
-        print(v, end=" ")
-        for i in range(1, n+1):
-            if not visted2[i] and graph[v][i]:
-                que.append(i)
-                visted2[i] = True
+visited = [False] * (n + 1)
+visited2 = [False] * (n + 1)
 
-dfs(v)
+dfs(graph, v, visited)
 print()
-bfs(v)
-
-    
+bfs(graph, v, visited2)
