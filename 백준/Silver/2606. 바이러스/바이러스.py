@@ -1,31 +1,33 @@
 import sys
 input = sys.stdin.readline
 
-n = int(input())
+node = int(input())
+edge = int(input())
 
-graph = [[] * (n+1) for _ in range(n+1)]
+graph = [[] for _ in range(node+1)]
 
-repeat = int(input())
-
-for i in range(repeat):
+for i in range(edge):
     a, b = map(int, input().split())
     graph[a].append(b)
     graph[b].append(a)
 
-visited = [False] * (n+1)
+visited = [0] * (node + 1)
 
 count = 0
 
-def dfs(graph, v, visited):
-    global count
-    visited[v] = True
+def dfs(v):
+    visited[v] = 1
 
     for i in graph[v]:
-        if not visited[i]:
-            count += 1
-            dfs(graph, i, visited)
-       
-dfs(graph, 1, visited)
-print(count)
+        if visited[i] == 0:
+            dfs(i)
 
+dfs(1)
 
+count = 0
+
+for i in visited:
+    if i == 1:
+        count += 1
+
+print(count-1)
