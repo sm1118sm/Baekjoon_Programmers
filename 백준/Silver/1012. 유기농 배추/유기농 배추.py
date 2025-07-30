@@ -1,41 +1,39 @@
 import sys
-input = sys.stdin.readline
 sys.setrecursionlimit(10000)
+input = sys.stdin.readline
 
-t = int(input())
+T = int(input())
 
+dx = [-1, 1, 0, 0]
+dy = [0, 0, -1, 1]
 
 def dfs(x, y):
-    if x < 0 or x >= m or y < 0 or y >= n:
-        return 
+    visited[y][x] = True
+
+    for i in range(4):
+        nx = x + dx[i]
+        ny = y + dy[i]
+
+        if 0 <= nx < M and 0 <= ny < N:
+            if graph[ny][nx] == 1 and not visited[ny][nx]:
+                dfs(nx, ny)
+
+for _ in range(T):
+    M, N, K = map(int, input().split())
     
-    if graph[y][x] == 0:
-        return 
-    
-    graph[y][x] = 0
-    
-    dfs(x-1, y)
-    dfs(x+1, y)
-    dfs(x, y-1)
-    dfs(x, y+1)
+    graph = [[0] * M for _ in range(N)]
+    visited = [[False] * M for _ in range(N)]
 
-
-for _ in range(t):
-    m, n, k = map(int, input().split())
-
-    graph = [[0] * m for _ in range(n)]
-
-    for i in range(k):
+    for _ in range(K):
         x, y = map(int, input().split())
-
         graph[y][x] = 1
 
     count = 0
 
-    for i in range(n):
-        for j in range(m):
-            if graph[i][j] == 1:
-                dfs(j, i)
+    for y in range(N):
+        for x in range(M):
+            if graph[y][x] == 1 and not visited[y][x]:
+                dfs(x, y)
                 count += 1
-
+    
     print(count)
