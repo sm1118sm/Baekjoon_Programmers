@@ -2,12 +2,12 @@ import sys
 input = sys.stdin.readline
 from collections import deque
 
-n, m = map(int, input().strip().split())
+n, m = map(int, input().split())
 graph = []
 visited = [[False] * m for _ in range(n)]
 
 for _ in range(n):
-    graph.append(list(map(int, input().strip().split())))
+    graph.append(list(map(int, input().split())))
 
 dx = [-1,1,0,0]
 dy = [0,0,-1,1]
@@ -28,7 +28,6 @@ def bfs(x,y):
 
             if 0 <= nx < n and 0 <= ny < m:
                 if not visited[nx][ny] and graph[nx][ny] == 1:
-                    graph[nx][ny] = graph[x][y] + 1
                     visited[nx][ny] = True
                     que.append((nx,ny))
 
