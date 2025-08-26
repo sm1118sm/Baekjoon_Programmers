@@ -2,29 +2,23 @@ import sys
 input = sys.stdin.readline
 from collections import deque
 
-n, k = map(int, input().split())
+n, m = map(int, input().split())
+visited = [False] * 100001
 
-q = deque()
+def bfs(n, time):
+    que = deque()
+    que.append((n, time))
+    visited[n] = True
 
-q.append([n,0])
+    while que:
+        x, time = que.popleft()
 
-def check_range(x):
-    return x>=0 and x<100001
+        if x == m:
+            return time
 
-visited = [False]*100001
+        for i in [x-1, x+1, x*2]:
+            if 0 <= i <= 100000 and not visited[i]:
+                visited[i] = True
+                que.append((i, time+1))
 
-ans = []
-
-while q:
-    x, sec = q.popleft()
-    if x == k :
-        print(sec)
-        break
-
-    nx = [x-1, x+1, 2*x]
-
-    for i in nx:
-        if check_range(i) and visited[i] == False:
-            q.append([i,sec+1])
-            visited[i] = True
-
+print(bfs(n,0))
