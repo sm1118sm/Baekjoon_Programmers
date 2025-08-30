@@ -7,11 +7,10 @@ def solution(land):
     dx = [-1, 1, 0, 0]
     dy = [0, 0, -1, 1]
     
-    oil_id = [[0]*m for _ in range(n)]  # 각 칸의 덩어리 번호
-    oil_size = dict()                   # 덩어리 번호 → 크기
+    oil_id = [[0]*m for _ in range(n)]  
+    oil_size = dict()                   
     id_counter = 1                      
     
-    # 1. 전체 덩어리 탐색 (BFS)
     for i in range(n):
         for j in range(m):
             if land[i][j] == 1 and oil_id[i][j] == 0:
