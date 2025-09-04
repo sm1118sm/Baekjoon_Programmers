@@ -12,7 +12,7 @@ SELECT
         WHEN AVG(C.SCORE) >= 96 THEN A.SAL * 0.2
         WHEN AVG(C.SCORE) >= 90 THEN A.SAL * 0.15
         WHEN AVG(C.SCORE) >= 80 THEN A.SAL * 0.1
-        ELSE A.SAL * 0
+        ELSE A.SAL * 0   -- 성과금이 0원이 되도록 0을 곱함
     END AS BONUS
 FROM HR_EMPLOYEES AS A
 JOIN HR_DEPARTMENT AS B 
