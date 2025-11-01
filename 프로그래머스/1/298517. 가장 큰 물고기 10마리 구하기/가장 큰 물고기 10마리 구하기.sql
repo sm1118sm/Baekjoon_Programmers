@@ -1,3 +1,7 @@
-SELECT ID, LENGTH FROM FISH_INFO
-ORDER BY LENGTH DESC, ID ASC
-LIMIT 10
+-- 코드를 작성해주세요
+select 
+    id, length
+from fish_info
+where length is not null
+order by length desc
+limit 10
