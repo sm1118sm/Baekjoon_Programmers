@@ -1,12 +1,12 @@
-SELECT 
-    A.TITLE, 
-    A.BOARD_ID, 
-    B.REPLY_ID, 
-    B.WRITER_ID, 
-    B.CONTENTS, 
-    DATE_FORMAT(B.CREATED_DATE, '%Y-%m-%d') AS CREATED_DATE
-FROM USED_GOODS_BOARD AS A
-INNER JOIN USED_GOODS_REPLY AS B 
-    ON A.BOARD_ID = B.BOARD_ID
-WHERE A.CREATED_DATE >= '2022-10-01' AND A.CREATED_DATE < '2022-11-01'
-ORDER BY B.CREATED_DATE ASC, A.TITLE ASC;
+-- 코드를 입력하세요
+SELECT
+    a.title,
+    a.board_id,
+    b.reply_id,
+    b.writer_id,
+    b.contents,
+    substr(b.created_date, 1, 10) as created_date
+from USED_GOODS_BOARD as a
+join USED_GOODS_REPLY as b on a.board_id = b.board_id
+where a.created_date like '2022-10-%'
+order by b.created_date, a.title
