@@ -1,10 +1,15 @@
-SELECT A.ID, B.FISH_NAME, A.LENGTH
-FROM FISH_INFO AS A
-JOIN FISH_NAME_INFO AS B 
-    ON A.FISH_TYPE = B.FISH_TYPE
-WHERE A.LENGTH = (
-    SELECT MAX(LENGTH)
-    FROM FISH_INFO
-    WHERE FISH_TYPE = A.FISH_TYPE
+-- 코드를 작성해주세요
+select
+    a.id,
+    b.fish_name,
+    a.length
+from fish_info as a
+join fish_name_info as b on a.fish_type = b.fish_type
+where (a.fish_type, a.length) in (
+    select
+        fish_type,
+        max(length)
+    from fish_info
+    group by fish_type
 )
-ORDER BY A.ID;
+order by a.id
