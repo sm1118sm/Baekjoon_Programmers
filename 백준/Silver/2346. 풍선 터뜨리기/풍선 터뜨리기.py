@@ -1,26 +1,28 @@
 import sys
-input = sys.stdin.readline
 from collections import deque
+input = sys.stdin.readline
 
-N = int(input()) 
-balloons = list(map(int, input().split()))  
+n = int(input())
 
+list1 = list(map(int, input().split()))
 
-dq = deque([(i + 1, balloons[i]) for i in range(N)])
+que = deque([(i+1, list1[i]) for i in range(n)])
 
 result = []
 
-while dq:
-    idx, move = dq.popleft()
-    result.append(idx)
+while que:
+    p, q = que.popleft()
 
-    if len(dq) == 0:
+    result.append(p)
+
+    if not que:
         break
 
-    if move > 0:
-        dq.rotate(-(move - 1))
-    else:
-        dq.rotate(-move)
+    if q < 0:
+        que.rotate(-q)
 
-for i in result:
-    print(i, end = " ")
+    else:
+        que.rotate(-(q - 1))
+
+
+print(*result)
