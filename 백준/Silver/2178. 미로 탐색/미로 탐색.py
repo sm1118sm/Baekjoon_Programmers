@@ -1,36 +1,36 @@
 import sys
-from collections import deque
 input = sys.stdin.readline
+from collections import deque
 
-dx = [0, 1, 0, -1]
-dy = [1, 0, -1, 0]
+n, m = map(int, input().split())
 
-a, b = map(int, input().split())
+graph = []
 
-graph = [[0] * b for _ in range(a)]
-visited = [[False] * b for _ in range(a)]
+for _ in range(n):
+    graph.append(list(map(int, input().strip())))
 
-for i in range(a):
-    value = list(input().strip()) 
-    for j in range(b):
-        graph[i][j] = int(value[j])
+dx = [-1,1,0,0]
+dy = [0,0,-1,1]
 
-def bfs(i, j):
+def bfs(x, y):
     que = deque()
-    que.append((i, j))
-    visited[i][j] = True
+    que.append((x,y))
 
     while que:
-        now = que.popleft()
-        for k in range(4):
-            x = now[0] + dx[k]
-            y = now[1] + dy[k]
+        x, y = que.popleft()
 
-            if 0 <= x < a and 0 <= y < b:
-                if (not visited[x][y]) and (graph[x][y] != 0):
-                    visited[x][y] = True
-                    graph[x][y] = graph[now[0]][now[1]] + 1
-                    que.append((x, y))
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
 
-bfs(0, 0)
-print(graph[a-1][b-1])
+            if 0 <= nx < n and 0 <= ny < m:
+                if graph[nx][ny] == 1:
+                    graph[nx][ny] = graph[x][y] + 1
+                    que.append((nx,ny))
+
+for x in range(n):
+    for y in range(m):
+        if graph[x][y] == 1:
+            bfs(x,y)
+
+print(graph[n-1][m-1])
