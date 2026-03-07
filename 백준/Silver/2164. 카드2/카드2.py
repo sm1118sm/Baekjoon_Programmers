@@ -1,15 +1,15 @@
 import sys
 from collections import deque
-
 input = sys.stdin.readline
 
-a = int(input())
+n = int(input())
 
-deque1 = deque([i for i in range(1, a+1)])
+que = deque([i for i in range(1, n+1)])
 
-while len(deque1) > 1:
-    
-    deque1.popleft()
-    deque1.append(deque1.popleft())
-    
-print(deque1[0])
+while True:
+    if len(que) == 1:
+        print(*que)
+        break
+
+    que.popleft()
+    que.append(que.popleft())
